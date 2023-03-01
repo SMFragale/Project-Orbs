@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    public Transform playerPosition;
+    public CharacterController controller;
     public Collider platformCollider;
+    //public float offset = 0.2f;
 
     private void Update() {
-        if(playerPosition.position.y >= transform.position.y) {
+        if(controller.gameObject.transform.position.y >= transform.position.y && controller.velocity.y <= 0) {
+           
             platformCollider.enabled = true;
         }
         else {

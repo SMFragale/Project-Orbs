@@ -16,6 +16,7 @@ public class PlayerMotor : MonoBehaviour
     private int numLanes = 3;
     public float laneDistance = 0.8f;
     public float turnSpeed = 0.05f;
+    public float isGroundedThreshold = 0.02f;
 
 
     private void Start() {
@@ -43,32 +44,28 @@ public class PlayerMotor : MonoBehaviour
         moveVector.x = (targetPosition-transform.position).normalized.x * horizontalSpeed;
         
         if(IsGrounded()) {
-            verticalVelocity = -0.1f;
+            Debug.Log("Is grounded :D");
+            verticalVelocity = 0f;
+
             if(Input.GetKeyDown(KeyCode.Space)) {
                 //Jump
                 verticalVelocity = jumpForce;
             }
         }
         else { //Falling
+            Debug.Log("Is NOT grounded D:");
             verticalVelocity -= (gravity*Time.deltaTime);
             //
 
         }
         
         moveVector.y = verticalVelocity;
-        moveVector.z = forwardSpeed; //Moving forward continously
+        moveVector.z = 0; //Moving forward continously
 
         Debug.DrawLine(transform.position, new Vector3(targetPosition.x, targetPosition.y, targetPosition.z+0.5f), Color.red, 1);
 
         controller.Move(moveVector * Time.deltaTime);
 
-        
-
-        // Rotate player to where he is going
-        Vector3 direction = controller.velocity; //Unitary vector
-        direction.y = 0;
-
-        transform.forward = Vector3.Lerp(transform.forward, direction, turnSpeed);
     }
 
     private void MoveLane(bool moveRight) {
@@ -83,7 +80,7 @@ public class PlayerMotor : MonoBehaviour
         Ray groundRay = new Ray(
             new Vector3(
                 controller.bounds.center.x,
-                (controller.bounds.center.y - controller.bounds.extents.y) + 0.2f,
+                (controller.bounds.center.y - controller.bounds.extents.y + isGroundedThreshold),
                 controller.bounds.center.z),
                 Vector3.down
             );
