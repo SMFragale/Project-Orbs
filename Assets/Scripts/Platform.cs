@@ -16,5 +16,6 @@ public class Platform : MonoBehaviour
         else {
             platformCollider.enabled = false;
         }
+        transform.position = new Vector3(transform.position.x, transform.position.y, controller.gameObject.transform.position.z);
     }
 }

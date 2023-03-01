@@ -60,7 +60,7 @@ public class PlayerMotor : MonoBehaviour
         }
         
         moveVector.y = verticalVelocity;
-        moveVector.z = 0; //Moving forward continously
+        moveVector.z = forwardSpeed; //Moving forward continously
 
         Debug.DrawLine(transform.position, new Vector3(targetPosition.x, targetPosition.y, targetPosition.z+0.5f), Color.red, 1);
 
