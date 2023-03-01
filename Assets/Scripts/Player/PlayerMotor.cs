@@ -47,7 +47,7 @@ public class PlayerMotor : MonoBehaviour
             Debug.Log("Is grounded :D");
             verticalVelocity = 0f;
 
-            if(Input.GetKeyDown(KeyCode.Space)) {
+            if(Input.GetKeyDown(KeyCode.UpArrow)) {
                 //Jump
                 verticalVelocity = jumpForce;
             }
@@ -55,7 +55,11 @@ public class PlayerMotor : MonoBehaviour
         else { //Falling
             Debug.Log("Is NOT grounded D:");
             verticalVelocity -= (gravity*Time.deltaTime);
-            //
+            // 
+            if(Input.GetKeyDown(KeyCode.DownArrow)) {
+                //Down dash
+                verticalVelocity =  -jumpForce;
+            }
 
         }
         
