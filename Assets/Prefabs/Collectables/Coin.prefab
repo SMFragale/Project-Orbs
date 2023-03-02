@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1669494435888816293}
   - component: {fileID: 66052034880352901}
   - component: {fileID: 551394238822107259}
-  - component: {fileID: 66052034880352921}
   - component: {fileID: 5929918700216302265}
   m_Layer: 0
   m_Name: Coin
@@ -31,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 877005831072858480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,7 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8ca1bdfdf274b488a0c013d0cc15c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 200
+  rotationAngle:
+    _useConstant: 0
+    _constantValue: 0
+    _variable: {fileID: 11400000, guid: e0f611141978b87469d0daa1c4a28858, type: 2}
 --- !u!114 &551394238822107259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,20 +115,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 246e9ae68be630e4eb0735836fcd543d, type: 3}
---- !u!114 &66052034880352921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 877005831072858480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fb03a9578f6eab4c9e385dfa1cc4e56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelValues: {fileID: 11400000, guid: e33293fe8e7608d4e8d6a507e971bdd2, type: 2}
-  speed: 6
 --- !u!65 &5929918700216302265
 BoxCollider:
   m_ObjectHideFlags: 0

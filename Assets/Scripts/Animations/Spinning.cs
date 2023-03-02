@@ -1,10 +1,14 @@
 using UnityEngine;
+using ScriptableObjectArchitecture;
 
 public class Spinning : MonoBehaviour
 {
-    public float speed = 1f; // The speed of the spin
+    [SerializeField]
+    //Since all items will rotate at the same speed, this value is global and updated somewhere else
+    private FloatReference rotationAngle;
 
-    private void FixedUpdate() {
-        transform.Rotate(Vector3.up, speed * Time.deltaTime, Space.World); // Spin the object around the Y axis
+    private void Update()
+    {
+        transform.rotation = Quaternion.Euler(0.0f, rotationAngle.Value, 0.0f);
     }
 }

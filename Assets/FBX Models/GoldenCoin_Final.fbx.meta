@@ -3,7 +3,12 @@ guid: d1c806a96268e7f4cbd60564c979ce74
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GoldenCoin_mtl
+    second: {fileID: 2100000, guid: a85c8e3f35d753c42846f5b010e0ba0b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
