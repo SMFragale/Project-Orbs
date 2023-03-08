@@ -7,6 +7,7 @@ using ScriptableObjectArchitecture;
 public class PlayerMotor : MonoBehaviour
 {
     CharacterController controller;
+    SwipeInput swipeInput;
 
     public float jumpForce = 4.0f;
     public float gravity = 12.0f;
@@ -20,9 +21,16 @@ public class PlayerMotor : MonoBehaviour
     public float turnSpeed = 0.05f;
     public float isGroundedThreshold = 0.02f;
 
+    private bool jumpIntent = false;
+    private bool diveIntent = false;
+
 
     private void Start() {
         controller = GetComponent<CharacterController>();
+        swipeInput = GetComponent<SwipeInput>();
+
+        swipeInput.OnSwipe.AddListener(Move);
+
     }
 
     private void Update() {
@@ -46,21 +54,29 @@ public class PlayerMotor : MonoBehaviour
         moveVector.x = (targetPosition-transform.position).normalized.x * horizontalSpeed;
         
         if(IsGrounded()) {
-            Debug.Log("Is grounded :D");
             verticalVelocity = 0f;
 
             if(Input.GetKeyDown(KeyCode.UpArrow)) {
                 //Jump
                 verticalVelocity = jumpForce;
             }
+            if(jumpIntent)
+            {
+                verticalVelocity = jumpForce;
+                jumpIntent = false;
+            }
         }
         else { //Falling
-            Debug.Log("Is NOT grounded D:");
             verticalVelocity -= (gravity*Time.deltaTime);
             // 
             if(Input.GetKeyDown(KeyCode.DownArrow)) {
                 //Down dash
                 verticalVelocity =  -jumpForce;
+            }
+            if(diveIntent)
+            {
+                verticalVelocity =  -jumpForce;
+                diveIntent = false;
             }
 
         }
@@ -93,4 +109,21 @@ public class PlayerMotor : MonoBehaviour
         
         return Physics.Raycast(groundRay, 0.2f +0.1f);
     }
+
+    private void Move(  SwipeDirection dir)
+    {
+        if(dir == SwipeDirection.Right)
+            MoveLane(true);
+        else if(dir == SwipeDirection.Left)
+            MoveLane(false);
+        else if(dir == SwipeDirection.Up)
+        {
+            jumpIntent = true; 
+        }
+        else if(dir == SwipeDirection.Down) 
+        {
+            diveIntent = true;
+        }
+    }
+    
 }

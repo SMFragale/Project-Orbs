@@ -596,6 +596,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1390504092 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3138487573048860888, guid: 320da524498fba344a7b6efdce4659e0, type: 3}
+  m_PrefabInstance: {fileID: 2832566255483446114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1693824855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -946,6 +951,35 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2361563497403152994, guid: 320da524498fba344a7b6efdce4659e0, type: 3}
   m_PrefabInstance: {fileID: 2832566255483446114}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &543450653014825219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390504092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371b6ad6b560f9249b12988aa8ea0a1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSwipeDistance: 1.06
+  OnSwipe:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!65 &543450653014825220
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390504092}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2832566255483446114
 PrefabInstance:
   m_ObjectHideFlags: 0
