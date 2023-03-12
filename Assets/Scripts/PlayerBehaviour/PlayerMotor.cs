@@ -21,6 +21,9 @@ public class PlayerMotor : MonoBehaviour
     public float turnSpeed = 0.05f;
     public float isGroundedThreshold = 0.02f;
 
+
+    private bool moveLeftIntent = false;
+    private bool moveRightIntent = false;
     private bool jumpIntent = false;
     private bool diveIntent = false;
 
@@ -28,75 +31,8 @@ public class PlayerMotor : MonoBehaviour
     private void Start() {
         controller = GetComponent<CharacterController>();
         swipeInput = GetComponent<SwipeInput>();
-
         swipeInput.OnSwipe.AddListener(Move);
-
     }
-
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.LeftArrow)) {
-            MoveLane(false);
-        }
-        if(Input.GetKeyDown(KeyCode.RightArrow)) {
-            MoveLane(true);
-        }
-
-        Vector3 targetPosition = transform.position.z * Vector3.forward;
-        if(lane == 0)
-            targetPosition += Vector3.left * laneDistance;
-        else if(lane == 2)
-            targetPosition += Vector3.right * laneDistance; 
-        
-        //Move delta
-        Vector3 moveVector = Vector3.zero;
-
-        //Take where we should be minus where we are right now
-        moveVector.x = (targetPosition-transform.position).normalized.x * horizontalSpeed;
-        
-        if(IsGrounded()) {
-            verticalVelocity = 0f;
-
-            if(Input.GetKeyDown(KeyCode.UpArrow)) {
-                //Jump
-                verticalVelocity = jumpForce;
-            }
-            if(jumpIntent)
-            {
-                verticalVelocity = jumpForce;
-                jumpIntent = false;
-            }
-        }
-        else { //Falling
-            verticalVelocity -= (gravity*Time.deltaTime);
-            // 
-            if(Input.GetKeyDown(KeyCode.DownArrow)) {
-                //Down dash
-                verticalVelocity =  -jumpForce;
-            }
-            if(diveIntent)
-            {
-                verticalVelocity =  -jumpForce;
-                diveIntent = false;
-            }
-
-        }
-        
-        moveVector.y = verticalVelocity;
-        moveVector.z = forwardSpeed.Value; //Moving forward continously
-
-        Debug.DrawLine(transform.position, new Vector3(targetPosition.x, targetPosition.y, targetPosition.z+0.5f), Color.red, 1);
-
-        controller.Move(moveVector * Time.deltaTime);
-
-    }
-
-    private void MoveLane(bool moveRight) {
-        if(!moveRight) 
-            lane = lane-1 >= 0 ? lane-1: lane;
-        else 
-            lane = lane + 1 < numLanes ? lane+1: lane;
-    }
-
 
     private bool IsGrounded() {
         Ray groundRay = new Ray(
@@ -125,5 +61,87 @@ public class PlayerMotor : MonoBehaviour
             diveIntent = true;
         }
     }
+
+    private void CheckKeyboardInput() {
+        if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+            moveLeftIntent = true;
+        }
+        if(Input.GetKeyDown(KeyCode.RightArrow)) {
+            moveRightIntent = true;
+        }
+        if(Input.GetKeyDown(KeyCode.UpArrow)) {
+            jumpIntent = true;
+        }
+        if(Input.GetKeyDown(KeyCode.DownArrow)) {
+            //Down dash
+            diveIntent = true;
+        }
+    }
+
+    private void CheckMoveIntent() {
+        if(moveRightIntent) {
+            MoveLane(true);
+            moveRightIntent = false;
+        }
+
+        else if(moveLeftIntent) {
+            MoveLane(false);
+            moveLeftIntent = false;
+        }
+
+        if(IsGrounded()) {
+            verticalVelocity = -0.1f;
+            
+            if(jumpIntent)
+            {
+                verticalVelocity = jumpForce;
+                jumpIntent = false;
+            }
+        }
+        else { //Falling
+            verticalVelocity -= (gravity*Time.deltaTime);
+
+            if(diveIntent)
+            {
+                verticalVelocity =  -jumpForce;
+                diveIntent = false;
+            }
+
+        }
+    }
+
+    private void MoveLane(bool moveRight) {
+        if(!moveRight) 
+            lane = lane-1 >= 0 ? lane-1: lane;
+        else 
+            lane = lane + 1 < numLanes ? lane+1: lane;
+    }
+
+    private void ContinuousMovement() {
+        // Updated Movement
+        Vector3 targetPosition = transform.position.z * Vector3.forward;
+        if(lane == 0)
+            targetPosition += Vector3.left * laneDistance;
+        else if(lane == 2)
+            targetPosition += Vector3.right * laneDistance; 
+        
+        //Move delta
+        Vector3 moveVector = Vector3.zero;
+
+        //Take where we should be minus where we are right now
+        moveVector.x = (targetPosition-transform.position).normalized.x * horizontalSpeed;
+        
+        moveVector.y = verticalVelocity;
+        moveVector.z = forwardSpeed.Value; //Moving forward continously
+
+        Debug.DrawLine(transform.position, new Vector3(targetPosition.x, targetPosition.y, targetPosition.z+0.5f), Color.red, 1);
+
+        controller.Move(moveVector * Time.deltaTime);
+    }
     
+    private void Update() {
+        CheckKeyboardInput();
+        CheckMoveIntent();
+        ContinuousMovement();
+    }
 }
