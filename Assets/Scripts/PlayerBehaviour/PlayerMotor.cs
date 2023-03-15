@@ -43,7 +43,9 @@ public class PlayerMotor : MonoBehaviour
                 Vector3.down
             );
         
-        return Physics.Raycast(groundRay, 0.2f +0.1f);
+        //return Physics.Raycast(groundRay, 0.2f +0.1f);
+
+        return controller.isGrounded;
     }
 
     private void Move(  SwipeDirection dir)
@@ -90,7 +92,7 @@ public class PlayerMotor : MonoBehaviour
         }
 
         if(IsGrounded()) {
-            verticalVelocity = -0.1f;
+            verticalVelocity = 0;
             
             if(jumpIntent)
             {
@@ -134,7 +136,7 @@ public class PlayerMotor : MonoBehaviour
         moveVector.y = verticalVelocity;
         moveVector.z = forwardSpeed.Value; //Moving forward continously
 
-        Debug.DrawLine(transform.position, new Vector3(targetPosition.x, targetPosition.y, targetPosition.z+0.5f), Color.red, 1);
+        //Debug.DrawLine(transform.position, new Vector3(targetPosition.x, targetPosition.y, targetPosition.z+0.5f), Color.red, 1);
 
         controller.Move(moveVector * Time.deltaTime);
     }
