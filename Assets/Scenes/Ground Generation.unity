@@ -767,7 +767,7 @@ GameObject:
   - component: {fileID: 1944083775}
   - component: {fileID: 1944083774}
   - component: {fileID: 1944083773}
-  - component: {fileID: 1944083772}
+  - component: {fileID: 1944083777}
   m_Layer: 0
   m_Name: PlatformD
   m_TagString: Ground
@@ -775,19 +775,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1944083772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944083771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12f8ad2a959df9b47886505dd5ea7719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  motor: {fileID: 543450653014825225}
 --- !u!65 &1944083773
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -866,6 +853,19 @@ Transform:
   m_Father: {fileID: 742126023}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1944083777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944083771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f8ad2a959df9b47886505dd5ea7719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motor: {fileID: 543450653014825225}
 --- !u!1001 &2090339149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -952,8 +952,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 371b6ad6b560f9249b12988aa8ea0a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSwipeDistance: 1.06
-  OnSwipe:
+  minDistanceToSwipe: 80
+  jumpEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 543450653014825225}
+        m_TargetAssemblyTypeName: PlayerMotor, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  moveRightEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 543450653014825225}
+        m_TargetAssemblyTypeName: PlayerMotor, Assembly-CSharp
+        m_MethodName: MoveRight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  moveLeftEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 543450653014825225}
+        m_TargetAssemblyTypeName: PlayerMotor, Assembly-CSharp
+        m_MethodName: MoveLeft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  diveEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!54 &543450653014825223
@@ -997,12 +1042,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2756d10dd42f18b4db9e936edd9b98ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  jumpForce: 6
+  speed: 1
+  jumpForce: 5.1
   laneWidth: 1.33
   startingLane: 0
   laneChangeSpeed: 5
-  rb: {fileID: 0}
+  rb: {fileID: 543450653014825223}
   xVelocity: 0
 --- !u!1001 &2832566255483446114
 PrefabInstance:

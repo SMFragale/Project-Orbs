@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMotor : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerMotor : MonoBehaviour
     private float distanceToGround;
 
     private bool jumpIntent;
+    private bool moveRightIntent;
+    private bool moveLeftIntent;
 
     [SerializeField]
     public float xVelocity;
@@ -23,6 +26,21 @@ public class PlayerMotor : MonoBehaviour
     {
         currentLane = startingLane;
         distanceToGround = GetComponent<BoxCollider>().bounds.extents.y;
+    }
+
+    public void MoveLeft() {
+        if(currentLane > -1) 
+            currentLane--;
+    }
+
+    public void MoveRight() {
+        if(currentLane < 1) 
+            currentLane++;
+    }
+
+    public void Jump() {
+        if(isGrounded)
+            jumpIntent = true;
     }
 
     void Update()
@@ -57,7 +75,7 @@ public class PlayerMotor : MonoBehaviour
         // jump if the player is grounded and the spacebar is pressed
         if (jumpIntent)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.velocity += Vector3.up * jumpForce;
             jumpIntent = false;
         }
     }
