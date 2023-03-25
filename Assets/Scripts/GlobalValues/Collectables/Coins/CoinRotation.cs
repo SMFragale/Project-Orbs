@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using ScriptableObjectArchitecture;
 
+
+//This script will manage the rotation of the coins
 public class CoinRotation : MonoBehaviour
 {
     

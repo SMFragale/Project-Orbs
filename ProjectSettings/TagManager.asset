@@ -7,6 +7,7 @@ TagManager:
   - Obstaculo
   - Collectable
   - Ground
+  - Garbage Collector
   layers:
   - Default
   - TransparentFX
