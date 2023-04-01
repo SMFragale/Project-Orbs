@@ -9,14 +9,11 @@ public class CoinPickup : MonoBehaviour
     private IntVariable coins;
 
     private void OnTriggerEnter(Collider other) {
-
-        if(other.CompareTag("Garbage Collector")) {
-            Destroy(gameObject);
-        }
-       
         if(other.CompareTag("Player")) {
-             //Play sounds, etc
-            AudioManager.Instance.PlaySound(sound);
+            //Play sounds, etc
+            AudioSource.PlayClipAtPoint(sound, transform.position);
+            if(AudioManager.Instance != null)
+                AudioManager.Instance.PlaySound(sound);
             coins.Value += 1;
             Destroy(gameObject);  
         }
