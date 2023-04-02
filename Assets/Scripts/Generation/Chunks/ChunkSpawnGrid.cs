@@ -66,7 +66,7 @@ public class ChunkSpawnGrid : MonoBehaviour
         GameObject spawned = Instantiate(prefab);
         spawned.transform.parent = this.gameObject.transform;
         spawned.transform.localPosition = spawnPoint;
-        spawned.transform.rotation = Quaternion.identity;
+        spawned.transform.rotation = prefab.transform.rotation;
         spawned.name = prefab.name + "_" + x + z;
 
         Debug.Log("Spawned object at: " + spawnPoint);
