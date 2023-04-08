@@ -12,18 +12,24 @@ namespace PathCreation
         float totalDist;
 
         void Start() {
+            Debug.Log("START");
+            if(pathCreator != null)
+                OnPathChanged();
+        }
+
+        void Awake()
+        {
+            Debug.Log("AWAKE");
+            
             if (pathCreator != null)
             {
                 // Subscribed to the pathUpdated event so that we're notified if the path changes during the game
                 pathCreator.pathUpdated += OnPathChanged;
-                SpawnAtInterval();
+                transform.SetParent(pathCreator.gameObject.transform);
+                transform.position = new Vector3(0,0,0);
             }
         }
 
-        void Update()
-        {
-            transform.position = pathCreator.gameObject.transform.position;
-        }
 
         // If the path changes during the game, update the distance travelled so that the follower's position on the new path
         // is as close as possible to its position on the old path
