@@ -11,7 +11,7 @@ using UnityEngine.Events;
 //
 //The script will then calculate the interval at which each object should be able to spawn. 
 
-public class ChunkSpawnGrid : MonoBehaviour
+public class AdaptableSpawnGrid : MonoBehaviour
 {
     [System.Serializable]
     public class SpawnEvent : UnityEvent<int, int, GameObject> {}
@@ -19,31 +19,60 @@ public class ChunkSpawnGrid : MonoBehaviour
     public SpawnEvent spawnEvent;
 
     [SerializeField]
-    private float yOffset = 5f;
+    private int yOffset = 0;
 
     [SerializeField]
-    private float rows = 21; //Non inclusive (max: 20 since it starts at cero)
+    private int rows = 5;
 
     [SerializeField]
-    private float cols = 3; //Non inclusive (max 2 since it starts at cero)
+    private int cols = 5;
 
     [SerializeField]
-    private float ZMin = -0.5f;
+    private float ZMin = -1;
 
     [SerializeField]
-    private float XMin = -0.1f;
+    private float XMin = -1;
 
     private float ZInterval;
     private float XInterval;
 
+    public bool drawGrid = false;
+
 
     void Start()
     {
+        spawnEvent.AddListener(Spawn);
+    }
+
+
+    private void Update() {
         ZInterval = Mathf.Abs(2 * ZMin) / (rows - 1);
         XInterval = Mathf.Abs(2 * XMin) / (cols - 1);
 
-        Debug.Log("Created ChunkSpawnGrid with intervals: " + new Vector2(ZInterval, XInterval));
-        spawnEvent.AddListener(Spawn);
+        if(drawGrid) {
+            DrawGrid();
+        }
+    }
+
+
+
+    private void DrawGrid() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                Vector2 realCoords = TransformCoords(i, j);
+
+                Vector3 botLeft = new Vector3(realCoords[0] - XInterval, yOffset, realCoords[1] - ZInterval);
+                Vector3 topLeft = new Vector3(realCoords[0] - XInterval, yOffset, realCoords[1] + ZInterval);
+                Vector3 topRight = new Vector3(realCoords[0] + XInterval, yOffset, realCoords[1] + ZInterval);
+                Vector3 botRight = new Vector3(realCoords[0] + XInterval, yOffset, realCoords[1] - ZInterval);
+
+                Debug.DrawLine(botLeft, topLeft);
+                Debug.DrawLine(topLeft, topRight);
+                Debug.DrawLine(topRight, botRight);
+                Debug.DrawLine(botRight, botLeft);
+
+            }
+        }
     }
 
 
