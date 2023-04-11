@@ -241,11 +241,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   yOffset: 0
-  rows: 5
-  cols: 5
-  ZMin: -10
-  XMin: -10
-  drawGrid: 0
+  side: 2
+  ZInterval: 1
+  XInterval: 1
+  drawGrid: 1
 --- !u!4 &1634657744
 Transform:
   m_ObjectHideFlags: 0

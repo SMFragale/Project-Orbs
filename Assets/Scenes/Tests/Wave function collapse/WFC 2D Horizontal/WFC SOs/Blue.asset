@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Blue
   m_EditorClassIdentifier: 
   prefab: {fileID: 2791564626397550701, guid: 7f82656c0b2a0d24685fad0e35008523, type: 3}
-  FRONT: []
+  FRONT:
+  - tile: {fileID: 0}
+    entropy: 0
   BACK: []
   LEFT:
-  - {fileID: 11400000, guid: 183f3529ab24a9b4ab226c0030bf3fce, type: 2}
+  - tile: {fileID: 0}
+    entropy: 0
   RIGHT:
-  - {fileID: 11400000, guid: e72c4e16a9b4cd84dbf163dbabbaac14, type: 2}
+  - tile: {fileID: 0}
+    entropy: 0
