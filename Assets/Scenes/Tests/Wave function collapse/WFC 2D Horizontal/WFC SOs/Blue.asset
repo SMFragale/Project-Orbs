@@ -18,7 +18,7 @@ MonoBehaviour:
     entropy: 0
   BACK: []
   LEFT:
-  - tile: {fileID: 0}
+  - tile: {fileID: 11400000, guid: 183f3529ab24a9b4ab226c0030bf3fce, type: 2}
     entropy: 0
   RIGHT:
   - tile: {fileID: 0}
