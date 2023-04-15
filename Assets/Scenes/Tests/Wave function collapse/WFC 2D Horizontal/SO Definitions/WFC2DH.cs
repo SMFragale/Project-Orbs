@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
 public class WFC2DH : WFC2D
 {
     public override void Generate()

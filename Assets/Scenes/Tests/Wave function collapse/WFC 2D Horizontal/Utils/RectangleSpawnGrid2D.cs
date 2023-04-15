@@ -21,9 +21,14 @@ public class RectangleSpawnGrid2D : ISpawnGrid2D
     public override void Spawn(int x, int z, GameObject prefab)
     {
         if(x < 0 || x >= width || z >= height || z < 0) {
-            Debug.LogError("Error trying to spawn a new object in the chunk matrix\nThe coordinate is greater than the maximum allowed or less than zero.");
+            Debug.LogError("Error trying to spawn a new object in the matrix\nThe coordinate is greater than the maximum allowed or less than zero.");
             return;
         }
+        if(prefab == null) {
+            Debug.LogError("Error trying to spawn a new object in the matrix\nThe prefab is null.");
+            return;
+        }
+
         Vector2 realCoords = TransformCoords(x, z);
         Vector3 spawnPoint = new Vector3(realCoords.x + (cellSize / 2), transform.position.y, realCoords.y + (cellSize / 2));
         GameObject spawned = Instantiate(prefab);
