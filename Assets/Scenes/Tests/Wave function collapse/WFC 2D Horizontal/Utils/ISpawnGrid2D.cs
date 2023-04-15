@@ -13,6 +13,15 @@ public abstract class ISpawnGrid2D : MonoBehaviour
 
     public bool drawGrid = false;
 
+    [Range(1, 100)]
+    public int width = 1;
+    [Range(1, 100)]
+    public int height = 1;
+    
+    //Size of each cell in the grid
+    [Range(0.1f, 10)]
+    public float cellSize = 1;
+
 
     void Start()
     {

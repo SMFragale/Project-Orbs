@@ -216,8 +216,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1634657744}
-  - component: {fileID: 1634657743}
   - component: {fileID: 1634657745}
+  - component: {fileID: 1634657746}
   m_Layer: 0
   m_Name: SpawnGrid
   m_TagString: Untagged
@@ -225,26 +225,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1634657743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1634657742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 616fa152def24b9468b9d601ccd1a9f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  yOffset: 0
-  side: 2
-  ZInterval: 1
-  XInterval: 1
-  drawGrid: 1
 --- !u!4 &1634657744
 Transform:
   m_ObjectHideFlags: 0
@@ -276,6 +256,25 @@ MonoBehaviour:
   z: 0
   prefab: {fileID: 2202791674748256050, guid: 31ad7cadab8b80c478de1619f8b210a3, type: 3}
   asg: {fileID: 0}
+--- !u!114 &1634657746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634657742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df87b9ce37c44144a1d0e9424cc4b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  drawGrid: 1
+  width: 1
+  height: 1
+  cellSize: 0.1
 --- !u!1 &1826500458
 GameObject:
   m_ObjectHideFlags: 0

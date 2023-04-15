@@ -18,9 +18,7 @@ public class SquareSpawnGrid2D : ISpawnGrid2D
     [SerializeField]
     private int side = 5;
 
-    [SerializeField]
     private float ZInterval = 1;
-    [SerializeField]
     private float XInterval = 1;
 
     public override void DrawGrid() {
@@ -54,7 +52,7 @@ public class SquareSpawnGrid2D : ISpawnGrid2D
 
         Debug.Log("Transformed given coords to: " + realCoords);
 
-        Vector3 spawnPoint = new Vector3(realCoords.x, yOffset, realCoords.y);
+        Vector3 spawnPoint = new Vector3(realCoords.x + (cellSize / 2), yOffset, realCoords.y + (cellSize / 2));
         GameObject spawned = Instantiate(prefab);
         spawned.transform.parent = this.gameObject.transform;
         spawned.transform.localPosition = spawnPoint;
