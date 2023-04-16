@@ -10,7 +10,11 @@ public class WFC2DEditor : Editor
         test.wfc = (WFC2D)EditorGUILayout.ObjectField("WFC implementation", test.wfc, typeof(WFC2D), true);
 
         if(GUILayout.Button("Iterate")) {
-            test.ExecuteTest();
+            test.Iterate();
+        }
+
+        if(GUILayout.Button("Generate")) {
+            test.Generate();
         }
     }
 }

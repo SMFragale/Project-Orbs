@@ -1,21 +1,32 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 
+// @Author Sebastian Molano (github.com/SMFragale)
+// This class represents a 2D WFC implementation that can be used to generate a grid of procedurally generated tiles. 
+// Use this class along with an ISpawnGrid2D implementation to generate a grid of tiles. The ISpawnGrid2D component is required for the algorithm to display anything.
+// This is a greedy implementation with some minor optimizations. The algorithm is not optimized for performance, but for readability and understanding.
+// In the future it would be great to add things like backtracking and other optimizations to make the algorithm faster, but for now this is a good starting point.
 public class WFC2DH : WFC2D
 
 //TODO Check the directions UP DOWN LEFT RIGHT
 {
+    //Matrix to store the entropy of each cell
     private int[,] entropyMatrix;
 
-    //Grid to apply the WFC algorithm in
+    //Grid that stores the prefab and other important information for each cell
     protected SpawnInfo2D[,] matrix;
 
-    //List of cells that will be used to calculate the next iteration. This is saved as state so that the SpawnIteration method will owkr without parameters 
+    //List of cells that will be used to calculate the next iteration. This is saved as state so that the SpawnIteration method will work without parameters 
     private List<Vector2Int> currentIterationCells;
 
     //In debug mode, the spawn iteration method can be called from the inspector to review each step of the algorithm
     public bool debugMode = true;
+
+    //Time in seconds between each iteration for the animation
+    [Range(0.5f, 20)]
+    public float iterationSpeed = 1.0f;
 
     protected override void Start() {
         base.Start();
@@ -43,16 +54,21 @@ public class WFC2DH : WFC2D
 
     public override void Generate()
     {
-        //TODO iterate until the grid is fully collapsed
+        StartCoroutine(SpawnIterationCoroutine());
     }
 
-    // Step of the algorithm 
-    // 1. Calculate the entropy of each cell
-    // 2. Pick the cell with the lowest entropy
-    // 3. Pick a random tile from the cell's tileset
-    // 4. Spawn the tile
-    // 5. Mark the cell as collapsed
-    public override void SpawnIteration() {
+    private IEnumerator SpawnIterationCoroutine() {
+        while(SpawnIteration() == false) {
+            yield return new WaitForSeconds(1 / iterationSpeed);
+        }
+    }
+
+    public override bool SpawnIteration() {
+        if(currentIterationCells.Count == 0) {
+            Debug.Log("No more cells to iterate");
+            return true;
+        }
+
         //Pick a cell with the lowest entropy
         Vector2Int lowestEntropyCell = FindLowestEntropyCell(currentIterationCells);
 
@@ -77,10 +93,12 @@ public class WFC2DH : WFC2D
             PrintCurrentIterationCells();
             */
         }
+
+        return false;
     }
 
     // Returns the cell with the lowest entropy within the adyacents of a recently collapsed cell, if there are more than one, returns a random one between those
-    // This does not calculate the entropy only finds the lowest entropy cell
+    // This does not calculate the entropy, it only finds the lowest entropy cell
     private Vector2Int FindLowestEntropyCell(List<Vector2Int> adyacentCells) {
         List<Vector2Int> lowestEntropyCells = new List<Vector2Int>();
         int lowestEntropy = int.MaxValue;
@@ -269,6 +287,7 @@ public class WFC2DH : WFC2D
     }
 
 
+    // For debugging purposes ----------------------------------------------
 
     private void PrintMatrix() {
         //TODO check if this is the best way to print the matrix

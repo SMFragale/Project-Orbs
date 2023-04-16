@@ -14,7 +14,8 @@ public abstract class WFC2D : MonoBehaviour
         spawnGrid = GetComponent<ISpawnGrid2D>();
     }
 
-    public abstract void SpawnIteration();
+    // Iterates over the algorithm. Returns true if the algorithm has finished otherwise returns false
+    public abstract bool SpawnIteration();
 
     //Generates the grid using the WFC algorithm
     public abstract void Generate();

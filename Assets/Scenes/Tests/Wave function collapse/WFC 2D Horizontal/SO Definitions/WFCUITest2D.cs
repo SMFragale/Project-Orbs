@@ -10,7 +10,11 @@ public class WFCUITest2D : MonoBehaviour
         wfc = GetComponent<WFC2D>();
     }
 
-    public void ExecuteTest() {
+    public void Iterate() {
         wfc.SpawnIteration();
+    }
+
+    public void Generate() {
+        wfc.Generate();
     }
 }
