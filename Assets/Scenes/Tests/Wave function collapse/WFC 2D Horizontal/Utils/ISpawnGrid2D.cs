@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public abstract class ISpawnGrid2D : MonoBehaviour
 {
     [System.Serializable]
-    public class SpawnEvent : UnityEvent<int, int, GameObject> {}
+    public class SpawnEvent : UnityEvent<int, int, GameObject, Quaternion> {}
 
     //Calls Spawn method
     public SpawnEvent spawnEvent;
@@ -19,7 +19,7 @@ public abstract class ISpawnGrid2D : MonoBehaviour
     public int height = 1;
     
     //Size of each cell in the grid
-    [Range(0.1f, 10)]
+    [Range(0.1f, 50)]
     public float cellSize = 1;
 
 
@@ -36,7 +36,7 @@ public abstract class ISpawnGrid2D : MonoBehaviour
     }
 
     //Spawns a given prefab on the abstract coordinates x, z of the grid
-    public abstract void Spawn(int x, int z, GameObject prefab);
+    public abstract void Spawn(int x, int z, GameObject prefab, Quaternion rotation = default);
 
     //Draws the grid on 3D space
     public abstract void DrawGrid();

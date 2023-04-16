@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(ISpawnGrid2D))]
 public abstract class WFC2D : MonoBehaviour
@@ -6,29 +7,15 @@ public abstract class WFC2D : MonoBehaviour
     //Grid to draw on
     protected ISpawnGrid2D spawnGrid;
 
-    //Grid to apply the WFC algorithm in
-    protected SpawnInfo2D[,] spawnInfoGrid;
+    //List of all the possible tiles in this WFC model
+    public List<WFCTile2D> possibleTiles;
 
-    private void Start() {
+    protected virtual void Start() {
         spawnGrid = GetComponent<ISpawnGrid2D>();
-        spawnInfoGrid = new SpawnInfo2D[spawnGrid.width, spawnGrid.height];
     }
+
+    public abstract void SpawnIteration();
 
     //Generates the grid using the WFC algorithm
     public abstract void Generate();
-
-}
-
-
-public class SpawnInfo2D
-{
-    public Quaternion rotation;
-    
-    public WFCTile2D tile;
-
-    public SpawnInfo2D(Quaternion rotation, WFCTile2D tile) {
-        this.rotation = rotation;
-        this.tile = tile;
-    }
-
 }

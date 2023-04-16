@@ -43,7 +43,7 @@ public class SquareSpawnGrid2D : ISpawnGrid2D
 
     //Will spawn an object at a given (x, z) position of the grid.
     //Will fail if the given x, z position is outside the bounds of the Grid as defined with Rows, Cols
-    public override void Spawn(int x, int z, GameObject prefab) {
+    public override void Spawn(int x, int z, GameObject prefab, Quaternion rotation = default) {
         if(x < 0 || x >= side || z >= side) {
             Debug.LogError("Error trying to spawn a new object in the chunk matrix\nThe coordinate is greater than the maximum allowed: " + (side-1) + " or less than zero.");
             return;

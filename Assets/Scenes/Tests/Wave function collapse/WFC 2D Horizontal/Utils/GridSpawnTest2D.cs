@@ -20,7 +20,7 @@ public class GridSpawnTest2D : MonoBehaviour
     }
 
     public void ExecuteTest() {
-        asg.spawnEvent.Invoke(x, z, prefab);
+        asg.spawnEvent.Invoke(x, z, prefab, Quaternion.identity);
     }
 
 

@@ -11,6 +11,6 @@ public class WFCUITest2D : MonoBehaviour
     }
 
     public void ExecuteTest() {
-        wfc.Generate();
+        wfc.SpawnIteration();
     }
 }

@@ -12,11 +12,11 @@ public class WFCTile2D : WFCTile
     [Header ("Possible adyacent Tiles for each side")]
     //Each list contains all the possible tiles that each side can have
     [SerializeField]
-    private List<WFCTile2D> UP;
+    public List<WFCTile2D> UP;
     [SerializeField]
-    private List<WFCTile2D> DOWN;
+    public List<WFCTile2D> DOWN;
     [SerializeField]
-    private List<WFCTile2D> LEFT;
+    public List<WFCTile2D> LEFT;
     [SerializeField]
-    private List<WFCTile2D> RIGHT;
+    public List<WFCTile2D> RIGHT;
 }
