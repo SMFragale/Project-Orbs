@@ -2,7 +2,8 @@ using UnityEngine;
 
 //Monobehaviour to be used with ChunkSpawnTestEditor which provides a
 //button to Spawn objects on a ChunkSpawnGrid
-public class ChunkSpawnTest : MonoBehaviour
+[RequireComponent (typeof(ISpawnGrid2D))]
+public class GridSpawnTest2D : MonoBehaviour
 {
     [SerializeField]
     public int x;
@@ -11,10 +12,15 @@ public class ChunkSpawnTest : MonoBehaviour
     [SerializeField]
     public GameObject prefab;
 
-    public ChunkSpawnGrid csg;
+    [HideInInspector]
+    public ISpawnGrid2D asg;
+
+    private void Start() {
+        asg = GetComponent<ISpawnGrid2D>();
+    }
 
     public void ExecuteTest() {
-        csg.spawnEvent.Invoke(x, z, prefab);
+        asg.spawnEvent.Invoke(x, z, prefab, Quaternion.identity);
     }
 
 
