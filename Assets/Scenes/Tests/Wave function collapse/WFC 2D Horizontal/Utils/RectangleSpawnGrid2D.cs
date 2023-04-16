@@ -34,7 +34,7 @@ public class RectangleSpawnGrid2D : ISpawnGrid2D
         GameObject spawned = Instantiate(prefab);
         spawned.transform.parent = this.gameObject.transform;
         spawned.transform.localPosition = spawnPoint;
-        spawned.transform.rotation = rotation;
+        spawned.transform.rotation = prefab.transform.rotation;
         spawned.name = prefab.name + "_" + x + z;
 
         //TODO update the rotation of the object

@@ -121,6 +121,8 @@ public class WFC2DH : WFC2D
 
     private WFCTile2D GetRandomTileFromCell(Vector2Int cell) {
         int randomIndex = Random.Range(0, matrix[cell.x, cell.y].options.Count);
+        Debug.Log("Options cound: " + matrix[cell.x, cell.y].options.Count + " Random index: " + randomIndex + "");
+
         WFCTile2D tile = matrix[cell.x, cell.y].options[randomIndex];
         return tile;
     }
@@ -211,8 +213,12 @@ public class WFC2DH : WFC2D
 
         foreach(var adyacentCell in adyacentCells) {
 
+            Debug.Log("\nFor adyacent cell: (" + adyacentCell.x + "," + adyacentCell.y + ") ");
+
             //Get the adyacent cells that have been collapsed and have their face direction
             List<CellFacingFrom> collapsedAdyacents = GetCollapsedAdyacentCellsAndFace(adyacentCell);
+
+            Debug.Log("There are " + collapsedAdyacents.Count + " collapsed adyacents");
 
             List<WFCTile2D> options = null;
 
@@ -241,6 +247,8 @@ public class WFC2DH : WFC2D
                     //Intersect the options to find the tiles that can only be applied to the cell
                     options = options.Intersect(matchingTiles).ToList();
                 }
+
+                Debug.Log("There are " + matchingTiles.Count + " matching tiles for the adyacent cell (" + cellPos.cell.x + "," + cellPos.cell.y + ")\n");
 
             }
 
