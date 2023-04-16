@@ -1,9 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RectangleSpawnGrid2D : ISpawnGrid2D
 {
+    public override void Clear()
+    {
+        foreach (Transform child in transform) {
+            Destroy(child.gameObject);
+        }
+    }
 
     public override void DrawGrid()
     {

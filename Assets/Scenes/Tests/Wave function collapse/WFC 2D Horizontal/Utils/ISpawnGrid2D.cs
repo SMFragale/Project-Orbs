@@ -38,6 +38,9 @@ public abstract class ISpawnGrid2D : MonoBehaviour
     //Spawns a given prefab on the abstract coordinates x, z of the grid
     public abstract void Spawn(int x, int z, GameObject prefab, Quaternion rotation = default);
 
+    //Deletes all the objects in the grid
+    public abstract void Clear();
+
     //Draws the grid on 3D space
     public abstract void DrawGrid();
 

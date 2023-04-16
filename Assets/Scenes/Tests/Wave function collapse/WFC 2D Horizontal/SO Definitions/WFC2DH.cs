@@ -25,7 +25,7 @@ public class WFC2DH : WFC2D
     public bool debugMode = true;
 
     //Time in seconds between each iteration for the animation
-    [Range(0.5f, 20)]
+    [Range(0.5f, 1000)]
     public float iterationSpeed = 1.0f;
 
     protected override void Start() {
@@ -61,6 +61,24 @@ public class WFC2DH : WFC2D
         while(SpawnIteration() == false) {
             yield return new WaitForSeconds(1 / iterationSpeed);
         }
+
+        bool allCellsCollapsed = true;
+
+        for(int i = 0; i < matrix.GetLength(0) && allCellsCollapsed; i++) {
+            for(int j = 0; j < matrix.GetLength(1) && allCellsCollapsed; j++) {
+                if (!matrix[i,j].collapsed) {
+                    allCellsCollapsed = false;
+                    Debug.LogError("The algorithm did not collapse all the cells");
+                } 
+            }
+        }
+
+        if(!allCellsCollapsed) {
+            Debug.LogError("Trying again.");
+            this.Start();
+            this.spawnGrid.Clear();
+            this.Generate();
+        }
     }
 
     public override bool SpawnIteration() {
@@ -72,10 +90,15 @@ public class WFC2DH : WFC2D
         //Pick a cell with the lowest entropy
         Vector2Int lowestEntropyCell = FindLowestEntropyCell(currentIterationCells);
 
+
         Debug.Log("Got lowest entropy cell: " + lowestEntropyCell);
 
         //Pick a random tile from the cell's options
         WFCTile2D tile = GetRandomTileFromCell(lowestEntropyCell);
+
+        if(tile == null) {
+            return true;
+        }
         
         //Collapse the cell
         CollapseCell(lowestEntropyCell, tile);
@@ -123,7 +146,15 @@ public class WFC2DH : WFC2D
         int randomIndex = Random.Range(0, matrix[cell.x, cell.y].options.Count);
         Debug.Log("Options cound: " + matrix[cell.x, cell.y].options.Count + " Random index: " + randomIndex + "");
 
-        WFCTile2D tile = matrix[cell.x, cell.y].options[randomIndex];
+        WFCTile2D tile = null;
+
+        if(matrix[cell.x, cell.y].options.Count == 0) {
+            Debug.LogError("No options found for cell: " + cell);
+        }
+        else {
+            tile = matrix[cell.x, cell.y].options[randomIndex];
+        }
+       
         return tile;
     }
 
@@ -213,12 +244,12 @@ public class WFC2DH : WFC2D
 
         foreach(var adyacentCell in adyacentCells) {
 
-            Debug.Log("\nFor adyacent cell: (" + adyacentCell.x + "," + adyacentCell.y + ") ");
+            //Debug.Log("\nFor adyacent cell: (" + adyacentCell.x + "," + adyacentCell.y + ") ");
 
             //Get the adyacent cells that have been collapsed and have their face direction
             List<CellFacingFrom> collapsedAdyacents = GetCollapsedAdyacentCellsAndFace(adyacentCell);
 
-            Debug.Log("There are " + collapsedAdyacents.Count + " collapsed adyacents");
+            //Debug.Log("There are " + collapsedAdyacents.Count + " collapsed adyacents");
 
             List<WFCTile2D> options = null;
 
@@ -248,7 +279,7 @@ public class WFC2DH : WFC2D
                     options = options.Intersect(matchingTiles).ToList();
                 }
 
-                Debug.Log("There are " + matchingTiles.Count + " matching tiles for the adyacent cell (" + cellPos.cell.x + "," + cellPos.cell.y + ")\n");
+                //Debug.Log("There are " + matchingTiles.Count + " matching tiles for the adyacent cell (" + cellPos.cell.x + "," + cellPos.cell.y + ")\n");
 
             }
 
@@ -263,8 +294,8 @@ public class WFC2DH : WFC2D
     private List<Vector2Int> GetAllCollapsedCells() {
         List<Vector2Int> collapsedCells = new List<Vector2Int>();
 
-        for(int i = 0; i < spawnGrid.width; i++) {
-            for(int j = 0; j < spawnGrid.height; j++) {
+        for(int i = 0; i < matrix.GetLength(0); i++) {
+            for(int j = 0; j < matrix.GetLength(1); j++) {
                 if(matrix[i, j].collapsed) {
                     collapsedCells.Add(new Vector2Int(i, j));
                 }

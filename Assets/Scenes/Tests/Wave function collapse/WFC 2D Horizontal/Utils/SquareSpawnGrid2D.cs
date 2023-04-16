@@ -21,6 +21,11 @@ public class SquareSpawnGrid2D : ISpawnGrid2D
     private float ZInterval = 1;
     private float XInterval = 1;
 
+    public override void Clear()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void DrawGrid() {
         for (int i = 0; i < side; i++) {
             for (int j = 0; j < side; j++) {
