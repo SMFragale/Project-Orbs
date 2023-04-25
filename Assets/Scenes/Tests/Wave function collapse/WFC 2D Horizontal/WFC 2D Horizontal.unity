@@ -218,7 +218,6 @@ GameObject:
   - component: {fileID: 1634657744}
   - component: {fileID: 1634657746}
   - component: {fileID: 1634657747}
-  - component: {fileID: 1634657748}
   - component: {fileID: 1634657749}
   m_Layer: 0
   m_Name: SpawnGrid
@@ -258,8 +257,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   drawGrid: 1
-  width: 10
-  height: 10
+  width: 20
+  height: 20
   cellSize: 3
 --- !u!114 &1634657747
 MonoBehaviour:
@@ -281,22 +280,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 10b963a142d53274780bcbb50a2f2476, type: 2}
   debugMode: 1
   iterationSpeed: 1
---- !u!114 &1634657748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1634657742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9eef32621665fb4dbdddad770a7304f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  x: 0
-  z: 0
-  prefab: {fileID: 0}
-  asg: {fileID: 0}
 --- !u!114 &1634657749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,7 +457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5157326317744547978, guid: 1c03e12799fbe9b4eb757f2b4a7d94c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: -17.71
       objectReference: {fileID: 0}
     - target: {fileID: 5157326317744547978, guid: 1c03e12799fbe9b4eb757f2b4a7d94c7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -531,7 +514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6765974508578679368, guid: 808623fc325a3d6448346cbbe0ee678f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -21.7
       objectReference: {fileID: 0}
     - target: {fileID: 6765974508578679368, guid: 808623fc325a3d6448346cbbe0ee678f, type: 3}
       propertyPath: m_LocalPosition.y
