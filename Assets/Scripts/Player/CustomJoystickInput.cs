@@ -22,15 +22,17 @@ namespace CMF
         //Use this to prevent any unwanted small movements of the joysticks ("jitter");
 		public float deadZoneThreshold = 0.2f;
 
+		public string actionName;
+
         public override float GetHorizontalMovementInput()
 		{
 			input = GetComponent<PlayerInput>();
 			float _horizontalInput;
 
 			if(useRawInput)
-				_horizontalInput = input.actions["Move"].ReadValue<Vector2>().x;
+				_horizontalInput = input.actions[actionName].ReadValue<Vector2>().x;
 			else
-				_horizontalInput = input.actions["Move"].ReadValue<Vector2>().normalized.x;
+				_horizontalInput = input.actions[actionName].ReadValue<Vector2>().normalized.x;
 
 			//Set any input values below threshold to '0';
 			if(Mathf.Abs(_horizontalInput) < deadZoneThreshold)
@@ -45,9 +47,9 @@ namespace CMF
 			float _verticalInput;
 
 			if(useRawInput)
-				_verticalInput = input.actions["Move"].ReadValue<Vector2>().y;
+				_verticalInput = input.actions[actionName].ReadValue<Vector2>().y;
 			else
-				_verticalInput = input.actions["Move"].ReadValue<Vector2>().normalized.y;
+				_verticalInput = input.actions[actionName].ReadValue<Vector2>().normalized.y;
 
 			//Set any input values below threshold to '0';
 			if(Mathf.Abs(_verticalInput) < deadZoneThreshold)
