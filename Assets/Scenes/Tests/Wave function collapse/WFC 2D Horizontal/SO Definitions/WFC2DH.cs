@@ -12,9 +12,6 @@ public class WFC2DH : WFC2D
 
 //TODO Check the directions UP DOWN LEFT RIGHT
 {
-    //Matrix to store the entropy of each cell
-    private int[,] entropyMatrix;
-
     //Grid that stores the prefab and other important information for each cell
     protected SpawnInfo2D[,] matrix;
 
@@ -30,25 +27,17 @@ public class WFC2DH : WFC2D
 
     protected override void Start() {
         base.Start();
-        entropyMatrix = new int[spawnGrid.width, spawnGrid.height];
         matrix = new SpawnInfo2D[spawnGrid.width, spawnGrid.height];
         currentIterationCells = new List<Vector2Int>();
 
         //Setup each tile in the grid
         for(int i = 0; i < spawnGrid.width; i++) {
             for(int j = 0; j < spawnGrid.height; j++) {
-                SpawnInfo2D initialInfo = new SpawnInfo2D(Quaternion.identity, null);
+                SpawnInfo2D initialInfo = new SpawnInfo2D(Quaternion.identity, null, possibleTiles.Count);
                 initialInfo.options = possibleTiles;
                 matrix[i, j] = initialInfo;
-                entropyMatrix[i, j] = possibleTiles.Count;
                 currentIterationCells.Add(new Vector2Int(i, j));
             }
-        }
-        if(debugMode) {
-            /*PrintEntropy();
-            PrintCurrentCollapsedCells();
-            PrintCurrentIterationCells();
-            */
         }
     }
 
@@ -90,7 +79,6 @@ public class WFC2DH : WFC2D
         //Pick a cell with the lowest entropy
         Vector2Int lowestEntropyCell = FindLowestEntropyCell(currentIterationCells);
 
-
         Debug.Log("Got lowest entropy cell: " + lowestEntropyCell);
 
         //Pick a random tile from the cell's options
@@ -108,15 +96,7 @@ public class WFC2DH : WFC2D
 
         //Update the cells that will be used on the next iteration
         FindCurrentIterationCells();
-
-        if(debugMode) {
-            /*
-            PrintEntropy();
-            PrintCurrentCollapsedCells();
-            PrintCurrentIterationCells();
-            */
-        }
-
+        
         return false;
     }
 
@@ -127,12 +107,12 @@ public class WFC2DH : WFC2D
         int lowestEntropy = int.MaxValue;
 
         foreach(var cell in adyacentCells) {
-            if (entropyMatrix[cell.x, cell.y] < lowestEntropy) {
-                    lowestEntropy = entropyMatrix[cell.x, cell.y];
+            if (matrix[cell.x, cell.y].entropy < lowestEntropy) {
+                    lowestEntropy = matrix[cell.x, cell.y].entropy;
                     lowestEntropyCells.Clear();
                     lowestEntropyCells.Add(new Vector2Int(cell.x, cell.y));
                 }
-                else if (entropyMatrix[cell.x, cell.y] == lowestEntropy) {
+                else if (matrix[cell.x, cell.y].entropy == lowestEntropy) {
                     lowestEntropyCells.Add(new Vector2Int(cell.x, cell.y));
                 }
         }
@@ -169,7 +149,7 @@ public class WFC2DH : WFC2D
         }
 
         //0 means that the cell is collapsed
-        entropyMatrix[cell.x, cell.y] = 0;
+        matrix[cell.x, cell.y].entropy = 0;
     }
 
     private List<Vector2Int> GetUnCollapsedAdyacentCells(Vector2Int cell) {
@@ -286,7 +266,7 @@ public class WFC2DH : WFC2D
             //TODO check if the algorithm cannot continue because there are no options left
 
             //Update the entropy of the cell and the matrix
-            entropyMatrix[adyacentCell.x, adyacentCell.y] = options.Count;
+            matrix[adyacentCell.x, adyacentCell.y].entropy = options.Count;
             matrix[adyacentCell.x, adyacentCell.y].options = options;            
         }
     }
@@ -347,8 +327,8 @@ public class WFC2DH : WFC2D
 
     private void PrintCurrentCollapsedCells() {
         string matrixString = "CurrentCollapsedCells: \n";
-        for (int i = 0; i < entropyMatrix.GetLength(0); i++) {
-            for (int j = 0; j < entropyMatrix.GetLength(1); j++) {
+        for (int i = 0; i < matrix.GetLength(0); i++) {
+            for (int j = 0; j < matrix.GetLength(1); j++) {
                 string value = matrix[j, i].collapsed ? "1" : "0";
                 matrixString += value + "  ";
             }
@@ -361,9 +341,9 @@ public class WFC2DH : WFC2D
     private void PrintEntropy() {
         //TODO check if this is the best way to print the matrix
         string matrixString = "Current Entropy: \n";
-        for (int i = 0; i < entropyMatrix.GetLength(0); i++) {
-            for (int j = 0; j < entropyMatrix.GetLength(1); j++) {
-                matrixString += entropyMatrix[j, i] + "  ";
+        for (int i = 0; i < matrix.GetLength(0); i++) {
+            for (int j = 0; j < matrix.GetLength(1); j++) {
+                matrixString += matrix[j, i].entropy + "  ";
             }
             matrixString += "\n";
         }
@@ -402,14 +382,18 @@ public class CellFacingFrom {
 public class SpawnInfo2D
 {
     public bool collapsed = false;
+
+    public int entropy;
+
     public Quaternion rotation;
     
     public WFCTile2D tile;
 
     public List<WFCTile2D> options;
 
-    public SpawnInfo2D(Quaternion rotation, WFCTile2D tile) {
+    public SpawnInfo2D(Quaternion rotation, WFCTile2D tile, int entropy) {
         this.rotation = rotation;
+        this.entropy = entropy;
         this.tile = tile;
         options = new List<WFCTile2D>();
     }
