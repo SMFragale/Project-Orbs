@@ -35,6 +35,9 @@ namespace CMF
 		[Range(1f, 50f)]
 		public float cameraSmoothingFactor = 25f;
 
+		//Variable to use either input from the custom input or to follow a target
+		public bool followTarget = false;
+
 		//Variables for storing current facing direction and upwards direction;
 		Vector3 facingDirection;
 		Vector3 upwardsDirection;
@@ -85,10 +88,19 @@ namespace CMF
 			if(cameraInput == null)
 				return;
 
-			//Get input values;
+			if(followTarget)
+			{
+				//Calculate target look vector;
+				Vector3 _direction = (facingDirection - tr.position);
+
+
+				RotateTowardDirection(facingDirection, cameraSpeed);
+				return;
+			}
+			//Get< input values;
 			float _inputHorizontal = cameraInput.GetHorizontalMovementInput();
 			float _inputVertical = cameraInput.GetVerticalMovementInput();
-		
+			
 			RotateCamera(_inputHorizontal, _inputVertical);
 		}
 
